@@ -1,54 +1,45 @@
+import type { Metadata } from "next";
 import Image from "next/image";
-import BookingWidget from "@/components/BookingWidget";
-import LocationMap from "@/components/LocationMap";
+import InquiryForm from "@/components/InquiryForm";
 import PhotoGallery from "@/components/PhotoGallery";
 import { site } from "@/lib/site";
-import { HERO_PHOTO, FEATURED, allPhotos } from "@/lib/photos";
+import { SALE_HERO_PHOTO, FEATURED, allPhotos } from "@/lib/photos";
 
-const amenities = [
-  "Direct oceanfront",
-  "Living room opens to a full-width deck",
-  "Private jacuzzi",
-  "Built-in fire pit",
-  "Chef's kitchen, travertine counters",
-  "Stone & brick archways",
-  "3 bedrooms incl. master suite",
-  "Detached casita with courtyard",
-];
+// Public for-sale homepage — indexable.
+export const metadata: Metadata = {
+  title: `${site.name} — Oceanfront Home for Sale, Baja California`,
+  description: `${site.name}: an oceanfront home for sale near ${site.location.label}. ${site.lede}`,
+};
 
 export default function Home() {
-  const totalPhotos = allPhotos().length;
+  const { sale } = site;
+  const photos = allPhotos();
+  const facts = [
+    { label: "Price", value: sale.price },
+    { label: "Bedrooms", value: `${sale.beds}` },
+    { label: "Bathrooms", value: `${sale.baths}` },
+    { label: "Lot", value: sale.lotSize },
+    { label: "Interior", value: sale.interior },
+    { label: "Setting", value: "Direct oceanfront" },
+  ];
+
   return (
     <>
       {/* Header */}
       <header className="absolute inset-x-0 top-0 z-20">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 text-white">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6 text-white">
           <span className="font-serif text-2xl">{site.name}</span>
-          <div className="hidden items-center gap-8 text-sm sm:flex">
-            <a href="#story" className="hover:text-sand">
-              The Home
-            </a>
-            <a href="/gallery" className="hover:text-sand">
-              Gallery
-            </a>
-            <a href="#location" className="hover:text-sand">
-              Location
-            </a>
-            <a
-              href="#book"
-              className="rounded-full bg-white/15 px-4 py-2 ring-1 ring-white/30 backdrop-blur hover:bg-white/25"
-            >
-              Book now
-            </a>
-          </div>
-        </nav>
+          <a href="/gallery" className="text-sm hover:text-sand">
+            Gallery
+          </a>
+        </div>
       </header>
 
       {/* Hero */}
-      <section className="relative flex min-h-screen items-center justify-center">
+      <section className="relative flex min-h-[75vh] items-center justify-center">
         <Image
-          src={HERO_PHOTO}
-          alt="Sunset Retreat — living room opening through a stone arch onto the ocean-view deck at dusk"
+          src={SALE_HERO_PHOTO}
+          alt="Sunset Retreat — oceanfront deck and pergola at sunset"
           fill
           priority
           sizes="100vw"
@@ -56,104 +47,96 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-black/45" />
         <div className="relative mx-auto max-w-3xl px-6 text-center text-white">
-          <p className="text-sm uppercase tracking-[0.3em] text-white/80">
-            {site.location.label}
-          </p>
-          <h1 className="mt-4 text-5xl leading-tight sm:text-7xl">
+          <span className="rounded-full bg-terracotta px-4 py-1 text-xs uppercase tracking-widest">
+            For Sale
+          </span>
+          <h1 className="mt-6 text-5xl leading-tight sm:text-7xl">
             {site.name}
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-lg text-white/90">
-            {site.lede}
-          </p>
+          <p className="mt-4 text-lg text-white/90">{site.location.label}</p>
           <a
-            href="#book"
+            href="#inquire"
             className="mt-10 inline-block rounded-full bg-terracotta px-8 py-3 font-medium text-white transition hover:opacity-90"
           >
-            Check availability
+            Request information
           </a>
         </div>
       </section>
 
-      {/* Story */}
-      <section id="story" className="mx-auto max-w-3xl px-6 py-24">
-        <h2 className="text-center text-4xl text-ocean">{site.tagline}</h2>
-        <div className="mt-8 space-y-6 text-lg leading-relaxed text-foreground/90">
+      {/* Facts */}
+      <section className="mx-auto max-w-5xl px-6 py-16">
+        <dl className="grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3">
+          {facts.map((f) => (
+            <div key={f.label}>
+              <dt className="text-xs uppercase tracking-widest text-muted">
+                {f.label}
+              </dt>
+              <dd className="mt-1 text-xl text-ocean">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      {/* Narrative */}
+      <section className="mx-auto max-w-3xl px-6 pb-16">
+        <div className="space-y-6 text-lg leading-relaxed text-foreground/90">
           {site.story.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
         </div>
       </section>
 
-      {/* Gallery */}
-      <section id="gallery" className="bg-sand/40 py-24">
+      {/* Gallery — featured, with a link to the full set */}
+      <section className="bg-sand/40 py-16">
         <div className="mx-auto max-w-6xl px-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="text-4xl text-ocean">Gallery</h2>
+            <h2 className="text-3xl text-ocean">Gallery</h2>
             <a
               href="/gallery"
               className="text-sm font-medium text-terracotta underline underline-offset-4 hover:opacity-80"
             >
-              View all {totalPhotos} photos →
+              View all {photos.length} photos →
             </a>
           </div>
-          <div className="mt-10">
+          <div className="mt-8">
             <PhotoGallery photos={FEATURED} variant="featured" />
           </div>
         </div>
       </section>
 
-      {/* Amenities */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <h2 className="text-4xl text-ocean">The details</h2>
-        <ul className="mt-10 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-          {amenities.map((a) => (
-            <li
-              key={a}
-              className="flex items-center gap-3 border-b border-sand py-3 text-lg"
-            >
-              <span className="text-terracotta">—</span>
-              {a}
+      {/* Highlights */}
+      <section className="mx-auto max-w-5xl px-6 py-16">
+        <h2 className="text-3xl text-ocean">Highlights</h2>
+        <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+          {sale.highlights.map((h) => (
+            <li key={h} className="flex items-start gap-3 text-lg">
+              <span className="mt-1 text-terracotta">—</span>
+              {h}
             </li>
           ))}
         </ul>
       </section>
 
-      {/* Location */}
-      <section id="location" className="bg-sand/40 py-24">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-2">
-          <div>
-            <h2 className="text-4xl text-ocean">Where you&apos;ll be</h2>
-            <p className="mt-6 text-lg leading-relaxed text-foreground/90">
-              {site.location.blurb}
-            </p>
-          </div>
-          <LocationMap className="aspect-[4/3] w-full overflow-hidden rounded-xl" />
+      {/* Ownership / trust */}
+      <section className="mx-auto max-w-3xl px-6 pb-16">
+        <div className="rounded-2xl border border-sand-deep bg-white p-6 text-sm leading-relaxed text-muted">
+          {sale.ownershipNote}
         </div>
       </section>
 
-      {/* Booking */}
-      <section id="book" className="mx-auto max-w-2xl px-6 py-24">
-        <h2 className="text-center text-4xl text-ocean">Book your stay</h2>
-        <p className="mx-auto mt-4 max-w-md text-center text-muted">
-          Choose your dates to see live availability and pricing.
+      {/* Inquiry */}
+      <section id="inquire" className="mx-auto max-w-2xl px-6 pb-24">
+        <h2 className="text-center text-3xl text-ocean">Request information</h2>
+        <p className="mx-auto mt-3 max-w-md text-center text-muted">
+          Serious inquiries welcome. We&apos;ll respond within 24 hours.
         </p>
         <div className="mt-10">
-          <BookingWidget />
+          <InquiryForm />
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-ocean py-12 text-white">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
-          <span className="font-serif text-2xl">{site.name}</span>
-          <p className="text-sm text-white/70">{site.location.label}</p>
-          <a
-            href={`mailto:${site.contact.email}`}
-            className="text-sm text-white/70 hover:text-white"
-          >
-            {site.contact.email}
-          </a>
-        </div>
+      <footer className="bg-ocean py-10 text-center text-sm text-white/70">
+        {site.name} · {site.location.label}
       </footer>
     </>
   );
