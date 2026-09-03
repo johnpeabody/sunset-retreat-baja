@@ -4,8 +4,8 @@ import PhotoGallery from "@/components/PhotoGallery";
 import { site } from "@/lib/site";
 import { allPhotos } from "@/lib/photos";
 
-// Same secret token as the sale page. Unlisted + never indexed.
-const TOKEN = process.env.SALE_PAGE_TOKEN ?? "casa-sosiego-7f3a9c";
+// Same secret token as the sale page — from SALE_PAGE_TOKEN env only.
+const TOKEN = process.env.SALE_PAGE_TOKEN;
 
 export const metadata: Metadata = {
   title: `${site.name} — Gallery`,
@@ -18,7 +18,7 @@ export default async function SaleGalleryPage({
   params: Promise<{ token: string }>;
 }) {
   const { token } = await params;
-  if (token !== TOKEN) notFound();
+  if (!TOKEN || token !== TOKEN) notFound();
 
   const photos = allPhotos();
   return (

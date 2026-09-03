@@ -6,9 +6,10 @@ import PhotoGallery from "@/components/PhotoGallery";
 import { site } from "@/lib/site";
 import { SALE_HERO_PHOTO, FEATURED, allPhotos } from "@/lib/photos";
 
-// Unlisted: reachable only at /sale/<token>. Keep this secret; share via the
-// direct URL + QR code only. Override with SALE_PAGE_TOKEN in the environment.
-const TOKEN = process.env.SALE_PAGE_TOKEN ?? "casa-sosiego-7f3a9c";
+// Unlisted: reachable only at /sale/<token>. The secret token lives ONLY in
+// the SALE_PAGE_TOKEN environment variable (.env.local locally, Vercel in
+// production) so it never appears in source. If unset, the page 404s.
+const TOKEN = process.env.SALE_PAGE_TOKEN;
 
 // Never indexed by search engines.
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default async function SalePage({
   params: Promise<{ token: string }>;
 }) {
   const { token } = await params;
-  if (token !== TOKEN) notFound();
+  if (!TOKEN || token !== TOKEN) notFound();
 
   const { sale } = site;
   const photos = allPhotos();
