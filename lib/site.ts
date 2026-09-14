@@ -39,11 +39,10 @@ export const site = {
   // For-sale brochure facts.
   sale: {
     price: "Price upon request",
-    beds: "3",
-    baths: "3",
-    casita: "1 bed · 1 bath",
-    lotSize: "600 m² lot",
-    interior: "2,400 sq ft",
+    lotSize: "600 m²",
+    setting: "Direct oceanfront",
+    mainHouse: { beds: "3", baths: "3", interior: "Approx. 2,900 sq ft" },
+    casita: { beds: "1", baths: "1" },
     highlights: [
       "Direct oceanfront with unobstructed Pacific views",
       "Living room opens fully onto an expansive deck",

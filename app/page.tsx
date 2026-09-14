@@ -14,13 +14,10 @@ export const metadata: Metadata = {
 export default function Home() {
   const { sale } = site;
   const photos = allPhotos();
-  const facts = [
+  const headline = [
     { label: "Price", value: sale.price },
-    { label: "Bedrooms", value: `${sale.beds}` },
-    { label: "Bathrooms", value: `${sale.baths}` },
-    { label: "Detached casita", value: sale.casita },
-    { label: "Lot", value: sale.lotSize },
-    { label: "Interior", value: sale.interior },
+    { label: "Lot size", value: sale.lotSize },
+    { label: "Setting", value: sale.setting },
   ];
 
   return (
@@ -65,8 +62,9 @@ export default function Home() {
 
       {/* Facts */}
       <section className="mx-auto max-w-5xl px-6 py-16">
-        <dl className="grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3">
-          {facts.map((f) => (
+        {/* Property-level headline facts */}
+        <dl className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+          {headline.map((f) => (
             <div key={f.label}>
               <dt className="text-xs uppercase tracking-widest text-muted">
                 {f.label}
@@ -75,6 +73,41 @@ export default function Home() {
             </div>
           ))}
         </dl>
+
+        {/* Two structures — main house and detached casita */}
+        <div className="mt-10 grid gap-6 sm:grid-cols-2">
+          <div className="rounded-2xl border border-sand-deep bg-white p-8">
+            <h3 className="font-serif text-2xl text-ocean">Main House</h3>
+            <div className="mt-5 flex gap-10">
+              <div>
+                <span className="text-4xl text-ocean">{sale.mainHouse.beds}</span>
+                <span className="ml-2 text-sm text-muted">Bedrooms</span>
+              </div>
+              <div>
+                <span className="text-4xl text-ocean">{sale.mainHouse.baths}</span>
+                <span className="ml-2 text-sm text-muted">Bathrooms</span>
+              </div>
+            </div>
+            <p className="mt-5 text-sm text-muted">{sale.mainHouse.interior}</p>
+          </div>
+
+          <div className="rounded-2xl border border-sand-deep bg-white p-8">
+            <h3 className="font-serif text-2xl text-ocean">Detached Casita</h3>
+            <div className="mt-5 flex gap-10">
+              <div>
+                <span className="text-4xl text-ocean">{sale.casita.beds}</span>
+                <span className="ml-2 text-sm text-muted">Bedroom</span>
+              </div>
+              <div>
+                <span className="text-4xl text-ocean">{sale.casita.baths}</span>
+                <span className="ml-2 text-sm text-muted">Bathroom</span>
+              </div>
+            </div>
+            <p className="mt-5 text-sm text-muted">
+              Private, with its own entrance and courtyard
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Narrative */}
