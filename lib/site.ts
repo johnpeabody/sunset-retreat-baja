@@ -39,7 +39,7 @@ export const site = {
   // For-sale brochure facts.
   sale: {
     price: "Price upon request",
-    lotSize: "600 m²",
+    lotSize: "6,400 sq ft",
     setting: "Direct oceanfront",
     mainHouse: { beds: "3", baths: "3", interior: "Approx. 2,900 sq ft" },
     casita: { beds: "1", baths: "1" },
