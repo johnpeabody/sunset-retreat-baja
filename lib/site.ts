@@ -39,8 +39,9 @@ export const site = {
   // For-sale brochure facts.
   sale: {
     price: "Price upon request",
-    beds: "3 + casita",
-    baths: "3 + casita",
+    beds: "3",
+    baths: "3",
+    casita: "1 bed · 1 bath",
     lotSize: "600 m² lot",
     interior: "2,400 sq ft",
     highlights: [

@@ -18,9 +18,9 @@ export default function Home() {
     { label: "Price", value: sale.price },
     { label: "Bedrooms", value: `${sale.beds}` },
     { label: "Bathrooms", value: `${sale.baths}` },
+    { label: "Detached casita", value: sale.casita },
     { label: "Lot", value: sale.lotSize },
     { label: "Interior", value: sale.interior },
-    { label: "Setting", value: "Direct oceanfront" },
   ];
 
   return (
