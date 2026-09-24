@@ -163,6 +163,9 @@ export default function Home() {
         <p className="mx-auto mt-3 max-w-md text-center text-muted">
           Serious inquiries welcome. We&apos;ll respond within 24 hours.
         </p>
+        <p className="mt-2 text-center text-sm text-muted">
+          Direct contact: {site.contact.name}
+        </p>
         <div className="mt-10">
           <InquiryForm />
         </div>

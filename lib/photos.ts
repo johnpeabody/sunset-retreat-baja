@@ -72,6 +72,22 @@ export const FEATURED: Shot[] = [
     src: "/photos/Secondary/P8190081-HDR-26.jpg",
     alt: "Pacific coastline and surf at sunset",
   },
+  {
+    src: "/photos/Primary/IMG_7536.jpg",
+    alt: "Ocean-view deck with pergola and fire pit",
+  },
+  {
+    src: "/photos/Primary/IMG_7537.jpg",
+    alt: "Expansive wood deck overlooking the Pacific",
+  },
+  {
+    src: "/photos/Primary/IMG_7535.jpg",
+    alt: "Landscaped garden pathway leading to the ocean",
+  },
+  {
+    src: "/photos/Primary/IMG_7534.jpg",
+    alt: "Garden path with ocean views",
+  },
 ];
 
 const TIER_DIRS = ["Primary", "Secondary", "Terciary"] as const;

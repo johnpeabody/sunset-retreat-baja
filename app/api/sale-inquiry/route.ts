@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { appendLeadToSheet, type Lead } from "@/lib/leads";
-import { notifyOwner, autoReplyToBuyer } from "@/lib/email";
+import { notifyContacts, autoReplyToBuyer } from "@/lib/email";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   // Fire the integrations; don't fail the request if one is misconfigured.
   const results = await Promise.allSettled([
     appendLeadToSheet(lead),
-    notifyOwner(lead),
+    notifyContacts(lead),
     autoReplyToBuyer(lead),
   ]);
   results.forEach((r, i) => {

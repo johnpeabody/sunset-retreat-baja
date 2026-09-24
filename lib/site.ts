@@ -38,7 +38,7 @@ export const site = {
 
   // For-sale brochure facts.
   sale: {
-    price: "Price upon request",
+    price: "$985,000",
     lotSize: "6,400 sq ft",
     setting: "Direct oceanfront",
     mainHouse: { beds: "3", baths: "3", interior: "Approx. 2,900 sq ft" },
@@ -57,7 +57,8 @@ export const site = {
   },
 
   contact: {
-    // Where booking questions go (display only).
-    email: "hello@casasosiego.example",
+    // Direct contact shown on the listing (name only — email is not exposed).
+    name: "Robert Lortz",
+    email: "hello@sunsetretreatbaja.com",
   },
 } as const;

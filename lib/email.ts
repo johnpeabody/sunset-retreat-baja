@@ -6,7 +6,7 @@ const RESEND_URL = "https://api.resend.com/emails";
 
 async function send(payload: {
   from: string;
-  to: string;
+  to: string | string[];
   subject: string;
   html: string;
   reply_to?: string;
@@ -25,16 +25,27 @@ async function send(payload: {
 
 const FROM = process.env.MAIL_FROM ?? "Sunset Retreat <onboarding@resend.dev>";
 
-export async function notifyOwner(lead: Lead): Promise<void> {
-  const to = process.env.OWNER_EMAIL;
-  if (!to) return;
+// Direct-contact recipients, comma-separated (CONTACT_EMAILS preferred;
+// OWNER_EMAIL kept for backward compatibility).
+function contactRecipients(): string[] {
+  const raw = process.env.CONTACT_EMAILS ?? process.env.OWNER_EMAIL ?? "";
+  return raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+export async function notifyContacts(lead: Lead): Promise<void> {
+  const to = contactRecipients();
+  if (!to.length) return;
   await send({
     from: FROM,
     to,
     reply_to: lead.email,
-    subject: `New sale inquiry — ${lead.name}`,
+    subject: `New inquiry — ${site.name} (${lead.name})`,
     html: `
       <h2>New inquiry for ${site.name}</h2>
+      <p>Direct contact: ${site.contact.name}</p>
       <p><strong>Name:</strong> ${lead.name}</p>
       <p><strong>Email:</strong> ${lead.email}</p>
       <p><strong>Phone:</strong> ${lead.phone || "—"}</p>
