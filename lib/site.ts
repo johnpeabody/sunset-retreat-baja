@@ -57,8 +57,9 @@ export const site = {
   },
 
   contact: {
-    // Direct contact shown on the listing (name only — email is not exposed).
+    // Direct contact shown on the listing.
     name: "Robert Lortz",
+    phone: "+1 951-642-0650",
     email: "hello@sunsetretreatbaja.com",
   },
 } as const;

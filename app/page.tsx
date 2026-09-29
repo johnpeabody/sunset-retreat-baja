@@ -163,9 +163,20 @@ export default function Home() {
         <p className="mx-auto mt-3 max-w-md text-center text-muted">
           Serious inquiries welcome. We&apos;ll respond within 24 hours.
         </p>
-        <p className="mt-2 text-center text-sm text-muted">
-          Direct contact: {site.contact.name}
-        </p>
+        <div className="mt-6 text-center">
+          <p className="text-xs uppercase tracking-widest text-muted">
+            Direct contact
+          </p>
+          <p className="mt-1 font-serif text-3xl text-ocean">
+            {site.contact.name}
+          </p>
+          <a
+            href={`tel:${site.contact.phone.replace(/[^\d+]/g, "")}`}
+            className="mt-1 inline-block text-xl text-terracotta hover:opacity-80"
+          >
+            {site.contact.phone}
+          </a>
+        </div>
         <div className="mt-10">
           <InquiryForm />
         </div>
