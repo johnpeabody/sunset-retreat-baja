@@ -45,7 +45,6 @@ export async function notifyContacts(lead: Lead): Promise<void> {
     subject: `New inquiry — ${site.name} (${lead.name})`,
     html: `
       <h2>New inquiry for ${site.name}</h2>
-      <p>Direct contact: ${site.contact.name}</p>
       <p><strong>Name:</strong> ${lead.name}</p>
       <p><strong>Email:</strong> ${lead.email}</p>
       <p><strong>Phone:</strong> ${lead.phone || "—"}</p>
